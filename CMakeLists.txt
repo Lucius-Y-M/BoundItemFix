@@ -4,7 +4,7 @@ option(BUILD_TEST "Sets log level to debug." OFF)
 
 # -------- Project ----------
 project(
-	ProjectTemplate
+	BoundWeaponFix
 	VERSION 1.0.0
 	LANGUAGES CXX
 )
@@ -18,8 +18,8 @@ list(APPEND CMAKE_MODULE_PATH
 include(SKSEPlugin)
 set(SKSE_USE_XBYAK ON)
 
-add_compile_definitions(SKYRIM_AE)
-add_compile_definitions(SKYRIM_SUPPORT_AE)
+	add_compile_definitions(SKYRIM_AE)
+	add_compile_definitions(SKYRIM_SUPPORT_AE)
 add_compile_definitions(SKSE_SUPPORT_XBYAK)
 
 if (BUILD_TEST)

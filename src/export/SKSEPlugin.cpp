@@ -1,5 +1,4 @@
 #include "hooks/hooks.h"
-#include "Papyrus/papyrus.h"
 
 namespace
 {
@@ -60,33 +59,19 @@ SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
 	return true;
 }
 
-static void MessageEventCallback(SKSE::MessagingInterface::Message* a_msg)
-{
-	switch (a_msg->type) {
-	case SKSE::MessagingInterface::kDataLoaded:
-		break;
-	default:
-		break;
-	}
-}
-
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
 	InitializeLog();
 	logger::info("{} v{}"sv, Plugin::NAME, Plugin::VERSION.string());
 
 	SKSE::Init(a_skse);
-	SKSE::AllocTrampoline(0);
+	SKSE::AllocTrampoline(14);
 
 	const auto ver = a_skse->RuntimeVersion();
 	if (ver < SKSE::RUNTIME_1_6_1130) {
 		return false;
 	}
 
-	const auto messaging = SKSE::GetMessagingInterface();
-	messaging->RegisterListener(&MessageEventCallback);
-
-	Hooks::Install();
-	SKSE::GetPapyrusInterface()->Register(Papyrus::RegisterFunctions);
+	Hooks::BoundItemMonitor::Install();
 	return true;
 }
