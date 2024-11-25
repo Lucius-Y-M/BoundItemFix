@@ -1,17 +1,22 @@
 {
-  "name": "replaceme",
+  "name": "bound-item-fix-640-backport",
   "version-string": "1.0.0",
   "description": "Template for SKSE plugin built using my commonlib. MIT License by default.",
   "homepage": "",
   "license": "MIT",
   "dependencies": [
     "fmt",
-    "rsm-binary-io",
+    "directxtk",
+    "rapidcsv",
     "spdlog",
+    "xbyak",
+    "catch2",
+    "magic-enum",
+    
     "clib-util",
-    "jsoncpp",
+
     "simpleini",
+
     "xbyak"
-  ],
-  "builtin-baseline": "ea295dff0b3e9e9caeb49d1225dc7272d3231cf1"
+  ]
 }

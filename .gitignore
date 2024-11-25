@@ -6,3 +6,13 @@
 /build
 /build-ng
 /build-test
+
+/cmake
+.gitignore
+.gitattributes
+CMakeLists.txt
+CMakePresets.json
+vcpkg.json
+
+/extern
+/github

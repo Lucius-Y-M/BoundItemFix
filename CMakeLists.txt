@@ -1,80 +1,52 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.25)
 
-option(BUILD_TEST "Sets log level to debug." OFF)
-
-# -------- Project ----------
 project(
-	BoundWeaponFix
-	VERSION 1.0.0
-	LANGUAGES CXX
-)
+        
 
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+        BoundWeaponFix
+        VERSION 1.0.0
 
-list(APPEND CMAKE_IGNORE_PATH "${PROJECT_BINARY_DIR}")
-list(APPEND CMAKE_MODULE_PATH
-	"${PROJECT_SOURCE_DIR}/tools/SKSE-CMakeModules/Modules"
-)
-include(SKSEPlugin)
-set(SKSE_USE_XBYAK ON)
 
-	add_compile_definitions(SKYRIM_AE)
-	add_compile_definitions(SKYRIM_SUPPORT_AE)
-add_compile_definitions(SKSE_SUPPORT_XBYAK)
+        # ConsiderateFollowers
+        # VERSION 1.2.1
 
-if (BUILD_TEST)
-	add_compile_definitions(DEBUG)
-endif()
 
-SKSEPlugin_Add(
-	${PROJECT_NAME}
-	SOURCE_DIR src
-	SOURCES
-		README.md
-		vcpkg.json
-	PRECOMPILE_HEADERS
-		src/common/PCH.h
+        # StaffEnchanting
+        # VERSION 1.1.0
+        LANGUAGES CXX
+
+        
+
 )
 
 
-find_package(jsoncpp CONFIG REQUIRED)
 
-target_link_libraries(
-		"${PROJECT_NAME}"
-		PRIVATE
-			JsonCpp::JsonCpp
-)
+set(PROJECT_LICENSE "MIT")
+set(PROJECT_FRIENDLY_NAME ${PROJECT_NAME})
+set(PROJECT_LONG_NAME "SKSE CommonLibSSE-NG Plugin")
+set(PROJECT_DESCRIPTION ${PROJECT_LONG_NAME})
 
-set_target_properties(CommonLibSSE PROPERTIES
-	FOLDER External
-)
+set(PROJECT_COPYRIGHT "Copyright")
 
-set(DATA_DIR "${PROJECT_SOURCE_DIR}/data")
 
-install(
-	FILES "${DATA_DIR}/SKSE/Plugins/replaceme.ini"
-	DESTINATION "SKSE/Plugins"
-)
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+include(GNUInstallDirs)
+include(addpluginsources)
+include(pluginconfig)
+include(plugintarget)
+include(pluginpackage)
+include("${PROJECT_SOURCE_DIR}/local.cmake" OPTIONAL)
 
-include(components.cmake)
+######## dependencies
 
-# ---- Post build ----
-if(DEFINED ENV{SKYRIM_MODS_FOLDER} AND IS_DIRECTORY "$ENV{SKYRIM_MODS_FOLDER}")
-	if(BUILD_TEST)
-		set(OUTPUT_FOLDER "$ENV{SKYRIM_MODS_FOLDER}/${PROJECT_NAME} - Test")
-	else() 
-		set(OUTPUT_FOLDER "$ENV{SKYRIM_MODS_FOLDER}/${PROJECT_NAME}")
-	endif()
-endif()
 
-if(DEFINED OUTPUT_FOLDER)
-    set(DLL_FOLDER "${OUTPUT_FOLDER}/SKSE/Plugins")
+### ==================================== DISABLE all Boost related items
 
-    add_custom_command(
-        TARGET "${PROJECT_NAME}"
-        POST_BUILD
-        COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:${PROJECT_NAME}>" "${DLL_FOLDER}/$<TARGET_FILE_NAME:${PROJECT_NAME}>"
-		COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_PDB_FILE:${PROJECT_NAME}>" "${DLL_FOLDER}/$<TARGET_PDB_FILE_NAME:${PROJECT_NAME}>"
-        VERBATIM
-    )
-endif()
+# set(Boost_NO_WARN_NEW_VERSIONS 1)
+# set(Boost_USE_STATIC_LIBS ON)
+# set(Boost_USE_MULTITHREADED  ON)
+# find_package(Boost REQUIRED COMPONENTS)
+# if(Boost_FOUND)
+#     target_link_libraries(${PROJECT_NAME} PRIVATE ${Boost_LIBRARIES})
+#     target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
+# endif()

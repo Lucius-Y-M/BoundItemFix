@@ -10,6 +10,7 @@ namespace Hooks {
 		}
 
 		auto& trampoline = SKSE::GetTrampoline();
+
 		_getBaseObject = trampoline.write_call<5>(getBaseObjectTarget.address(), &GetBaseObject);
 	}
 

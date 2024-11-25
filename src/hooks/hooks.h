@@ -1,5 +1,9 @@
 #pragma once
 
+
+#include "common/PCH.h"
+
+
 namespace Hooks {
 	class BoundItemMonitor {
 	public:
